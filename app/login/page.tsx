@@ -16,13 +16,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const createSession = async (idToken: string) => {
-    const res = await fetch("/api/session", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+const createSession = async (idToken: string) => {
+  const res = await fetch("/api/auth/firebase", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create session");
+  }
+};
 
     if (!res.ok) {
       throw new Error("Failed to create session");
